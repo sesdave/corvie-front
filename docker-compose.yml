@@ -17,7 +17,7 @@ services:
     depends_on:
       - frontend
     build:
-      context: .nginx
+      context: ./nginx
       dockerfile: Dockerfile
     container_name: webserver
     restart: unless-stopped
