@@ -12,7 +12,7 @@ COPY ./.eslintrc.js .
 
 RUN [ "npm", "install", "-g", "@vue/cli" ]
 RUN [ "npm", "install" ]
-RUN [ "npm", "run", "lint" ]
+#RUN [ "npm", "run", "lint" ]
 
 
 COPY ./src/ ./src/
