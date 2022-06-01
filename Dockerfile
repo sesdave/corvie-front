@@ -6,7 +6,7 @@ COPY . .
 
 
 RUN rm -rf node_modules && \
-  NODE_ENV=production yarn install \
+  NODE_ENV=production npm install \
   --prefer-offline \
   --pure-lockfile \
   --non-interactive \
@@ -21,4 +21,4 @@ COPY --from=builder /app  .
 #ENV HOST 0.0.0.0
 EXPOSE 3000
 
-CMD [ "yarn", "start" ]
+CMD [ "npm", "start" ]
