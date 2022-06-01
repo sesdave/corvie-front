@@ -1,6 +1,6 @@
 ARG NODE_VERSION=latest
 ARG NGINX_VERSION=1.18.0
-FROM node:$NODE_VERSION as build
+FROM node:8 as build
 
 WORKDIR /build
 
