@@ -10,24 +10,12 @@ services:
     volumes:
       - /app/node_modules
       - .:/var/www/html/
-    networks:
-      - app-network
-
-  #Nginx Service
-  webserver:
-    depends_on:
-      - frontend
-    build:
-      context: .
-     # dockerfile: Dockerfile
-    container_name: webserver
-    restart: unless-stopped
-    tty: true
     ports:
-      - "80:80"
+      - "2000:3000"  
     networks:
       - app-network
 
+ 
 #Docker Networks
 networks:
   app-network:
