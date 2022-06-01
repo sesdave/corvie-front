@@ -8,7 +8,7 @@ RUN npm install \
   --prefer-offline \
   --frozen-lockfile \
   --non-interactive \
-  --production=false
+  --production=true
 
 RUN npm run build
 
