@@ -16,7 +16,6 @@ services:
   #Nginx Service
   webserver:
     depends_on:
-      - backend
       - frontend
     build:
       context: ./nginx
