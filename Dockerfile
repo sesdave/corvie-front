@@ -15,7 +15,7 @@ RUN [ "npm", "install" ]
 #RUN [ "npm", "run", "lint" ]
 
 
-COPY ./pages/ ./pages/
+COPY ./ ./
 #COPY ./public/ ./public/
 COPY ./assets/ ./assets/
 
