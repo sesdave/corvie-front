@@ -16,7 +16,7 @@ RUN [ "npm", "install" ]
 
 
 COPY ./pages/ ./pages/
-COPY ./public/ ./public/
+#COPY ./public/ ./public/
 COPY ./assets/ ./assets/
 
 RUN [ "npm", "run", "build" ]
