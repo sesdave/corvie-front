@@ -1,34 +1,13 @@
-version: "2.0"
+version: '2'
 services:
-
-  frontend:
-    stdin_open: true
-    container_name: frontend
+  nginx:
     build:
       context: .
-      dockerfile: Dockerfile
-    volumes:
-      - /app/node_modules
-      - .:/var/www/html/
-    networks:
-      - app-network
-
-  #Nginx Service
-  webserver:
-    depends_on:
-      - frontend
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    container_name: webserver
-    restart: unless-stopped
-    tty: true
     ports:
-      - "80:80"
-    networks:
-      - app-network
-
-#Docker Networks
-networks:
-  app-network:
-    driver: bridge
+      - '8089:8080'
+    volumes:
+      - ./.env:/app/.env
+      - ./vhosts/nginx.conf:/opt/bitnami/nginx/conf/server_blocks/nginx.conf
+volumes:
+  mariadb_data:
+    driver: local
