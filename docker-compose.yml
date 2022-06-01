@@ -5,11 +5,11 @@ services:
     stdin_open: true
     container_name: frontend
     build:
-      context: ../frontend-code
+      context: .
       dockerfile: Dockerfile
     volumes:
       - /app/node_modules
-      - ../frontend-code:/var/www/html/
+      - .:/var/www/html/
     networks:
       - app-network
 
