@@ -6,7 +6,7 @@ services:
     container_name: frontend
     build:
       context: .
-      dockerfile: Dockerfile
+      #dockerfile: Dockerfile
     volumes:
       - /app/node_modules
       - .:/var/www/html/
@@ -18,8 +18,8 @@ services:
     depends_on:
       - frontend
     build:
-      context: ./nginx
-      dockerfile: Dockerfile
+      context: .
+     # dockerfile: Dockerfile
     container_name: webserver
     restart: unless-stopped
     tty: true
