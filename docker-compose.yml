@@ -5,9 +5,7 @@ services:
       context: .
     ports:
       - '80:80'
-    volumes:
-      - ./.env:/app/.env
-      - ./vhosts/nginx.conf:/opt/bitnami/nginx/conf/server_blocks/nginx.conf
+   
 volumes:
   mariadb_data:
     driver: local
