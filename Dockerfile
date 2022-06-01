@@ -1,31 +1,31 @@
-ARG NODE_VERSION=latest
-ARG NGINX_VERSION=1.18.0
-FROM node:16.13.0 as build
-
-WORKDIR /build
-
-COPY ./package*.json ./
-COPY ./vue.config.js .
-COPY ./babel.config.js .
-COPY ./.eslintrc.js .
-#COPY ./.env .
-
-RUN [ "npm", "install", "-g", "@vue/cli" ]
-RUN [ "npm", "install" ]
-#RUN [ "npm", "run", "lint" ]
-
-
-COPY ./ ./
-#COPY ./public/ ./public/
-COPY ./assets/ ./assets/
-
-RUN [ "npm", "run", "build" ]
-
-FROM bitnami/nginx:$NGINX_VERSION
+FROM node:lts as builder
 
 WORKDIR /app
-USER 1001
 
-COPY --from=build /build/dist .
+COPY . .
 
-EXPOSE 8080
+RUN yarn install \
+  --prefer-offline \
+  --frozen-lockfile \
+  --non-interactive \
+  --production=false
+
+RUN yarn build
+
+RUN rm -rf node_modules && \
+  NODE_ENV=production yarn install \
+  --prefer-offline \
+  --pure-lockfile \
+  --non-interactive \
+  --production=true
+
+FROM node:lts
+
+WORKDIR /app
+
+COPY --from=builder /app  .
+
+ENV HOST 0.0.0.0
+EXPOSE 80
+
+CMD [ "yarn", "start" ]
