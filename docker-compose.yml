@@ -1,0 +1,14 @@
+version: '2'
+services:
+  nginx:
+    build:
+      context: .
+    ports:
+      - '8089:9050'
+      - '8443:8443'
+    volumes:
+      - ./.env:/app/.env
+      - ./vhosts/nginx.conf:/opt/bitnami/nginx/conf/server_blocks/nginx.conf
+volumes:
+  mariadb_data:
+    driver: local
