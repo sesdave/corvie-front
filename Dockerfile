@@ -2,19 +2,17 @@ FROM node:lts as builder
 
 WORKDIR /app
 
+COPY package*.json ./
+
+RUN rm -rf node_modules && npm install
+# Copy rest of the files
 COPY . .
 
+# Build the project
+RUN npm run build
 
-RUN rm -rf node_modules && \
-  NODE_ENV=production npm install \
-  --prefer-offline \
-  --pure-lockfile \
-  --non-interactive \
-  --production=false
+#COPY . .
 
-FROM node:lts
-
-WORKDIR /app
 
 COPY --from=builder /app  .
 
