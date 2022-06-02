@@ -4,13 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN rm -rf node_modules && \
-  NODE_ENV=production npm install \
-  --prefer-offline \
-  --pure-lockfile \
-  --non-interactive \
-  --production=true
-
+RUN rm -rf node_modules && npm install
 # Copy rest of the files
 COPY . .
 
