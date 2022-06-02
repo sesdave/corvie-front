@@ -16,7 +16,7 @@ COPY . .
 WORKDIR /app
 
 
-COPY --from=builder /app  .
+COPY --from=builder /app/.nuxt/dist  .
 
 #ENV HOST 0.0.0.0
 EXPOSE 3000
