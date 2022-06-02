@@ -10,7 +10,7 @@ RUN rm -rf node_modules && \
   --prefer-offline \
   --pure-lockfile \
   --non-interactive \
-  --production=true
+  --production=false
 
 FROM node:lts
 
