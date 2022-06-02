@@ -15,6 +15,7 @@ RUN rm -rf node_modules && \
 FROM node:lts
 
 WORKDIR /app
+RUN npm run build
 
 COPY --from=builder /app  .
 
