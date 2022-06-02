@@ -20,9 +20,10 @@ COPY ./assets/ ./assets/
 RUN [ "npm", "run", "build" ]
 
 
-WORKDIR /app
 USER 1001
 
+FROM node:16.13.0
+WORKDIR /app
 COPY --from=build /app  .
 #COPY --from=build /build/dist .
 EXPOSE 3000
