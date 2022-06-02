@@ -1,17 +1,24 @@
-FROM node:16.13.0
-RUN apk add --no-cache git
-RUN apk add --no-cache openssh
-RUN apk add --no-cache yarn
-RUN mkdir -p /app
-COPY ./ /app
+FROM node:lts as builder
+
 WORKDIR /app
-RUN yarn install
 
-# Set environment variables
+COPY . .
 
-RUN yarn build
-RUN yarn cache clean
 
+RUN rm -rf node_modules && \
+  NODE_ENV=production npm install \
+  --prefer-offline \
+  --pure-lockfile \
+  --non-interactive \
+  --production=true
+
+FROM node:lts
+
+WORKDIR /app
+
+COPY --from=builder /app  .
+
+#ENV HOST 0.0.0.0
 EXPOSE 3000
 
-CMD [ "yarn", "start" ]
+CMD [ "npm", "start" ]
