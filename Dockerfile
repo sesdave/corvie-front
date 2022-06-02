@@ -1,21 +1,17 @@
-FROM node:lts as builder
-
+FROM node:alpine
+RUN apk add --no-cache git
+RUN apk add --no-cache openssh
+RUN apk add --no-cache yarn
+RUN mkdir -p /app
+COPY ./app/ /app/
 WORKDIR /app
+RUN yarn install
 
-COPY . .
+# Set environment variables
 
+RUN yarn build
+RUN yarn cache clean
 
-RUN rm -rf node_modules && \
-  npm install \
-
-FROM node:lts
-
-WORKDIR /app
-RUN npm run build
-
-COPY --from=builder /app  .
-
-#ENV HOST 0.0.0.0
 EXPOSE 3000
 
-CMD [ "npm", "start" ]
+CMD [ "yarn", "start" ]
