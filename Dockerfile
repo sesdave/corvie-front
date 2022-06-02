@@ -1,24 +1,30 @@
-FROM node:lts as builder
+FROM node:16.13.0 as build
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY ./package*.json ./
+COPY ./vue.config.js .
+COPY ./babel.config.js .
+COPY ./.eslintrc.js .
+#COPY ./.env .
 
-RUN rm -rf node_modules && npm install
-# Copy rest of the files
-COPY . .
+RUN [ "npm", "install", "-g", "@vue/cli" ]
+RUN [ "npm", "install" ]
+#RUN [ "npm", "run", "lint" ]
 
-# Build the project
-RUN npm run build
 
-COPY . .
+COPY ./ ./
+#COPY ./public/ ./public/
+COPY ./assets/ ./assets/
+
+RUN [ "npm", "run", "build" ]
+
 
 WORKDIR /app
+USER 1001
 
-
-COPY --from=builder /app/.nuxt/dist  .
-
-#ENV HOST 0.0.0.0
+COPY --from=build /app  .
+#COPY --from=build /build/dist .
 EXPOSE 3000
 
 CMD [ "npm", "start" ]
