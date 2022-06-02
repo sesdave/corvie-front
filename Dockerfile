@@ -3,7 +3,7 @@ RUN apk add --no-cache git
 RUN apk add --no-cache openssh
 RUN apk add --no-cache yarn
 RUN mkdir -p /app
-COPY ./app/ /app/
+COPY ./ /app
 WORKDIR /app
 RUN yarn install
 
