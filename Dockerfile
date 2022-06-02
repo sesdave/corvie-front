@@ -1,31 +1,31 @@
-FROM node:16.13.0 as build
+FROM node:lts as builder
 
 WORKDIR /app
 
-COPY ./package*.json ./
-COPY ./vue.config.js .
-COPY ./babel.config.js .
-COPY ./.eslintrc.js .
-#COPY ./.env .
+COPY . .
 
-RUN [ "npm", "install", "-g", "@vue/cli" ]
-RUN [ "npm", "install" ]
-#RUN [ "npm", "run", "lint" ]
+RUN yarn install \
+  --prefer-offline \
+  --frozen-lockfile \
+  --non-interactive \
+  --production=false
 
+RUN yarn build
 
-COPY ./ ./
-#COPY ./public/ ./public/
-COPY ./assets/ ./assets/
+RUN rm -rf node_modules && \
+  NODE_ENV=production yarn install \
+  --prefer-offline \
+  --pure-lockfile \
+  --non-interactive \
+  --production=true
 
-RUN [ "npm", "run", "build" ]
+FROM node:lts
 
-
-USER 1001
-
-FROM node:16.13.0
 WORKDIR /app
-COPY --from=build /app  .
-#COPY --from=build /build/dist .
+
+COPY --from=builder /app  .
+
+ENV HOST 0.0.0.0
 EXPOSE 3000
 
-CMD [ "npm", "start" ]
+CMD [ "yarn", "start" ]
