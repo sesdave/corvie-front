@@ -7,6 +7,7 @@ services:
     image: davidses/corren-app-front
     networks:
       - frontend-net
+      - proxy-tier
     environment:
       - VIRTUAL_HOST=139.180.205.129
       - LETSENCRYPT_HOST=139.180.205.129
