@@ -2,7 +2,11 @@ version: '3'
 
 services:  
   nuxt:
-    build: ./
+    build: 
+      context: .
+    image: davidses/corren-app-front
+    networks:
+      - frontend-net
     environment:
       - VIRTUAL_HOST=139.180.205.129
       - LETSENCRYPT_HOST=139.180.205.129
@@ -49,3 +53,4 @@ volumes:
 
 networks:
   proxy-tier:
+  frontend-net:
