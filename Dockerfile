@@ -8,9 +8,9 @@ COPY . .
 RUN rm -rf node_modules && \
   npm install \
 
-#FROM node:lts
+FROM node:lts
 
-#WORKDIR /app
+WORKDIR /app
 RUN npm run build
 
 COPY --from=builder /app  .
