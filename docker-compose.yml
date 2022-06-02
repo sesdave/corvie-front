@@ -17,6 +17,8 @@ services:
       - NUXT_HOST=0.0.0.0
     ports:
       - 3000:3000
+    volumes:
+      - ./www/:/var/www/html/  
     container_name: corren-app-fronten 
  
   
